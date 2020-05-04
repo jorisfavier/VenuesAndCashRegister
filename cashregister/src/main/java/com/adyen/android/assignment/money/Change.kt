@@ -1,11 +1,12 @@
 package com.adyen.android.assignment.money
 
 import java.util.TreeMap
+import kotlin.Comparator
 
 class Change {
     private val map by lazy {
         TreeMap<MonetaryElement, Int>(Comparator { lhs, rhs ->
-            lhs.minorValue.compareTo(rhs.minorValue)
+            rhs.minorValue.compareTo(lhs.minorValue)
         })
     }
 
@@ -22,6 +23,11 @@ class Change {
 
     fun add(element: MonetaryElement, count: Int): Change {
         return modify(element, count)
+    }
+
+    fun add(change: Change): Change {
+        change.map.forEach { entry -> modify(entry.key, entry.value) }
+        return this
     }
 
     fun remove(element: MonetaryElement, count: Int): Change {
