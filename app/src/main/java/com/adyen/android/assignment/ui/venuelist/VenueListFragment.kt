@@ -67,23 +67,7 @@ class VenueListFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.state.observe(viewLifecycleOwner, Observer { state ->
-            listLoader.isVisible = state == VenueListViewModel.State.Loading
-            venueList.isVisible = state == VenueListViewModel.State.Loaded
-            listError.isVisible = state is VenueListViewModel.State.Error
-                    || state is VenueListViewModel.State.Empty
-
-            when (state) {
-                is VenueListViewModel.State.Error -> {
-                    Log.w(VenueListFragment::class.java.simpleName, state.throwable)
-                    displayError()
-                }
-                VenueListViewModel.State.Empty -> {
-                    displayError(getString(R.string.no_result))
-                }
-                VenueListViewModel.State.FineLocationNotGranted -> {
-                    requestFineLocationPermission()
-                }
-            }
+            handleUIState(state)
         })
 
         sharedViewModel.fineLocationGranted.observe(viewLifecycleOwner, Observer { granted ->
@@ -105,6 +89,35 @@ class VenueListFragment : Fragment() {
         })
     }
 
+    /**
+     * Show and hide the different UI elements based on the given state
+     *
+     * @param state
+     */
+    private fun handleUIState(state: VenueListViewModel.State) {
+        listLoader.isVisible = state == VenueListViewModel.State.Loading
+        venueList.isVisible = state == VenueListViewModel.State.Loaded
+        listError.isVisible = state is VenueListViewModel.State.Error
+                || state is VenueListViewModel.State.Empty
+
+        when (state) {
+            is VenueListViewModel.State.Error -> {
+                Log.w(VenueListFragment::class.java.simpleName, state.throwable)
+                displayError()
+            }
+            VenueListViewModel.State.Empty -> {
+                displayError(getString(R.string.no_result))
+            }
+            VenueListViewModel.State.FineLocationNotGranted -> {
+                requestFineLocationPermission()
+            }
+        }
+    }
+
+    /**
+     * If the fine location has not been granted a native dialog will be prompt to the user
+     * asking for the permission
+     */
     private fun requestFineLocationPermission() {
         if (!isFineLocationGranted) {
             ActivityCompat.requestPermissions(
@@ -115,6 +128,11 @@ class VenueListFragment : Fragment() {
         }
     }
 
+    /**
+     * Display an error message in the center of the screen
+     *
+     * @param message the message to be displayed
+     */
     private fun displayError(message: String? = null) {
         listError.isVisible = true
         listLoader.isVisible = false
