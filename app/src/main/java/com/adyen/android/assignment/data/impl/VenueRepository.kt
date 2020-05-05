@@ -13,6 +13,9 @@ class VenueRepository(private val placesService: PlacesService) : IVenueReposito
             .build()
         val response = placesService
             .getVenueRecommendations(query).awaitResponse()
+        check(response.isSuccessful && response.body()?.meta?.code == 200) {
+            "The api should return an HTTP 200 code"
+        }
         return response.body()?.response?.groups?.flatMap { group -> group.items.map { it.venue } }
             ?: listOf()
     }

@@ -62,7 +62,7 @@ class VenueListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         initObservers()
-        if (!isFineLocationGranted) requestFineLocationPermission() else viewModel.loadVenues()
+        viewModel.loadVenues()
     }
 
     private fun initObservers() {
@@ -72,11 +72,17 @@ class VenueListFragment : Fragment() {
             listError.isVisible = state is VenueListViewModel.State.Error
                     || state is VenueListViewModel.State.Empty
 
-            if (state is VenueListViewModel.State.Error) {
-                Log.w(VenueListFragment::class.java.simpleName, state.throwable)
-                displayError()
-            } else if (state is VenueListViewModel.State.Empty) {
-                displayError(getString(R.string.no_result))
+            when (state) {
+                is VenueListViewModel.State.Error -> {
+                    Log.w(VenueListFragment::class.java.simpleName, state.throwable)
+                    displayError()
+                }
+                VenueListViewModel.State.Empty -> {
+                    displayError(getString(R.string.no_result))
+                }
+                VenueListViewModel.State.FineLocationNotGranted -> {
+                    requestFineLocationPermission()
+                }
             }
         })
 

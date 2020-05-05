@@ -23,6 +23,7 @@ class VenueListViewModel(
         object Empty : State()
         object Loaded : State()
         class Error(val throwable: Throwable) : State()
+        object FineLocationNotGranted : State()
     }
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -38,6 +39,9 @@ class VenueListViewModel(
     fun loadVenues() {
         fusedLocationProviderClient.lastLocation.addOnSuccessListener {
             getVenuesAroundMe(it)
+        }
+        fusedLocationProviderClient.lastLocation.addOnFailureListener {
+            _state.value = State.FineLocationNotGranted
         }
     }
 
