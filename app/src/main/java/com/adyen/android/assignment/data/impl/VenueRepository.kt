@@ -7,9 +7,9 @@ import com.adyen.android.assignment.data.IVenueRepository
 import retrofit2.awaitResponse
 
 class VenueRepository(private val placesService: PlacesService) : IVenueRepository {
-    override suspend fun getVenuesByLocation(): List<Venue> {
+    override suspend fun getVenuesByLocation(longitude: Double, latitude: Double): List<Venue> {
         val query = VenueRecommendationsQueryBuilder()
-            .setLatitudeLongitude(52.376510, 4.905890)
+            .setLatitudeLongitude(latitude, longitude)
             .build()
         val response = placesService
             .getVenueRecommendations(query).awaitResponse()
