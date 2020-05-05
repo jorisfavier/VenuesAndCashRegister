@@ -8,9 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 
-class VenueRepository(
-    private val placesService: PlacesService
-) : IVenueRepository {
+class VenueRepository(private val placesService: PlacesService) : IVenueRepository {
+
     override suspend fun getVenuesByLocation(longitude: Double, latitude: Double): List<Venue> {
         return withContext(Dispatchers.IO) {
             val query = VenueRecommendationsQueryBuilder()

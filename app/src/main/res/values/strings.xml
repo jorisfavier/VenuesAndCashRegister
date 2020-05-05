@@ -4,4 +4,5 @@
     <string name="location_not_granted_error">Please grant the Location permission</string>
     <string name="no_result">No result found</string>
     <string name="search">Search</string>
+    <string name="venues_around_me">Venues around me</string>
 </resources>

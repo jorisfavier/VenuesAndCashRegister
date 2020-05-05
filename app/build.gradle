@@ -34,9 +34,6 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
-    dataBinding {
-        enabled = true
-    }
     kotlinOptions { jvmTarget = '1.8' }
 }
 
@@ -70,7 +67,6 @@ dependencies {
 
     //Location data
     implementation 'com.google.android.gms:play-services-location:17.0.0'
-
 
     //Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutine_version"

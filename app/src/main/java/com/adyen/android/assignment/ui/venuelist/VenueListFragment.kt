@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adyen.android.assignment.R
 import com.adyen.android.assignment.api.PlacesService
-import com.adyen.android.assignment.databinding.VenueListFragmentBinding
 import com.adyen.android.assignment.ui.MainActivityViewModel
 import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.venue_list_fragment.*
@@ -38,7 +36,6 @@ class VenueListFragment : Fragment() {
     }
     private val sharedViewModel: MainActivityViewModel by activityViewModels()
 
-    private lateinit var binding: VenueListFragmentBinding
     private var venueAdapter = VenueListAdapter(ArrayList())
     private val isFineLocationGranted: Boolean
         get() =
@@ -51,11 +48,7 @@ class VenueListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.venue_list_fragment, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        return binding.root
+        return layoutInflater.inflate(R.layout.venue_list_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
