@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Android Assignment</string>
+    <string name="an_error_occurred">An error occurred</string>
+    <string name="location_not_granted_error">Please grant the Location permission</string>
+    <string name="no_result">No result found</string>
+    <string name="search">Search</string>
 </resources>

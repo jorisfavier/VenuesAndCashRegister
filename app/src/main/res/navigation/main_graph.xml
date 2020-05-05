@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/venueListFragment">
+
+    <fragment
+        android:id="@+id/venueListFragment"
+        android:name="com.adyen.android.assignment.ui.venuelist.VenueListFragment"
+        android:label="venue_list_fragment"
+        tools:layout="@layout/venue_list_fragment" />
+</navigation>
